@@ -10,6 +10,7 @@ spec:
   source:
     repoURL: 'https://victoriametrics.github.io/helm-charts/'
     targetRevision: 0.29.3
+    chart: victoria-metrics-operator
     helm:
       valuesObject:
         cleanupCRD: true
@@ -24,7 +25,6 @@ spec:
           requests:
             cpu: 80m
             memory: 120Mi
-    chart: victoria-metrics-operator
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: victoria-metrics-operator

@@ -1,0 +1,74 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: victoria-metrics-k8s-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://victoriametrics.github.io/helm-charts/'
+    targetRevision: 0.19.4
+    chart: victoria-metrics-k8s-stack
+    helm:
+      valuesObject:
+        victoria-metrics-operator:
+          enabled: false
+        defaultRules:
+          create: false
+        defaultDashboardsEnabled: false
+        experimentalDashboardsEnabled: false
+        vmsingle:
+          enabled: false
+        vmcluster:
+          enabled: true
+          spec:
+            retentionPeriod: "14"
+            replicationFactor: 2
+            vmstorage:
+              replicaCount: 3
+              storageDataPath: "/vm-data"
+              storage:
+                volumeClaimTemplate:
+                  storageClassName: ceph-rbd
+                  resources:
+                    requests:
+                      storage: 10Gi
+              resources:
+                limits:
+                  cpu: "0.5"
+                  memory: 500Mi
+            vmselect:
+              replicaCount: 2
+              cacheMountPath: "/select-cache"
+              storage:
+                volumeClaimTemplate:
+                  storageClassName: ceph-rbd
+                  resources:
+                    requests:
+                      storage: 1Gi
+              resources:
+                limits:
+                  cpu: "0.5"
+                  memory: 500Mi
+                requests:
+                  cpu: "0.2"
+                  memory: 200Mi
+            vminsert:
+              replicaCount: 2
+        alertmanager:
+          enabled: false
+        vmalert:
+          enabled: false
+        grafana: 
+          enabled: false
+        crds:
+          enabled: false
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
