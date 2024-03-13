@@ -1,0 +1,46 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-ingress-tls
+spec:
+  secretName: grafana-ingress-tls
+  dnsNames:
+    - k8s-dashboard.tunamaguro.work
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    dashboards: "grafana"
+spec:
+  config:
+    log:
+      mode: "console"
+    auth:
+      disable_login_form: "false"
+    security:
+      admin_user: root
+      admin_password: secret
+  ingress:
+    spec: 
+      ingressClassName: nginx
+      rules:
+        - host: k8s-dashboard.tunamaguro.work
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: grafana-service
+                    port:
+                      number: 3000
+                path: /
+                pathType: Prefix
+      tls:
+        - hosts:
+            - k8s-dashboard.tunamaguro.work
+          secretName: grafana-ingress-tls
