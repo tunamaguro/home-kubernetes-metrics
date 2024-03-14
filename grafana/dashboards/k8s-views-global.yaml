@@ -4,6 +4,7 @@ kind: GrafanaDashboard
 metadata:
   name: k8s-global-overview
 spec:
+  folder: General
   resyncPeriod: 30s
   instanceSelector:
     matchLabels:

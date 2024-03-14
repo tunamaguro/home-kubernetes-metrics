@@ -3,6 +3,7 @@ kind: GrafanaDashboard
 metadata:
   name: argocd-dashboard
 spec:
+  folder: General
   resyncPeriod: 30s
   instanceSelector:
     matchLabels:
