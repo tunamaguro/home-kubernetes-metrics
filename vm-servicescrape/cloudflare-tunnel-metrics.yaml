@@ -9,7 +9,7 @@ spec:
       app: cloudflare-tunnel
   namespaceSelector:
     matchNames:
-      - argocd
+      - cloudflare-tunnel
   endpoints:
   - port: http-metrics
     path: /metrics
