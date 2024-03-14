@@ -31,10 +31,11 @@ spec:
               storageDataPath: "/vm-data"
               storage:
                 volumeClaimTemplate:
-                  storageClassName: ceph-rbd
-                  resources:
-                    requests:
-                      storage: 10Gi
+                  spec:
+                    storageClassName: ceph-rbd
+                    resources:
+                      requests:
+                        storage: 10Gi
               resources:
                 limits:
                   cpu: "0.5"
@@ -44,10 +45,11 @@ spec:
               cacheMountPath: "/select-cache"
               storage:
                 volumeClaimTemplate:
-                  storageClassName: ceph-rbd
-                  resources:
-                    requests:
-                      storage: 1Gi
+                  spec:
+                    storageClassName: "ceph-rbd"
+                    resources:
+                      requests:
+                        storage: 1Gi
               resources:
                 limits:
                   cpu: "0.5"
