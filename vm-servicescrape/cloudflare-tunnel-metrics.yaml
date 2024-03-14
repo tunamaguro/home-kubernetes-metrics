@@ -1,0 +1,16 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: cloudflare-tunnel-metrics
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: cloudflare-tunnel
+  namespaceSelector:
+    matchNames:
+      - argocd
+  endpoints:
+  - port: http-metrics
+    path: /metrics
+  
