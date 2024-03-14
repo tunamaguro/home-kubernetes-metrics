@@ -4,7 +4,6 @@ kind: GrafanaDashboard
 metadata:
   name: k8s-pod-overview
 spec:
-  folder: General
   resyncPeriod: 30s
   instanceSelector:
     matchLabels:
