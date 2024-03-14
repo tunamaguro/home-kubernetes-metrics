@@ -32,7 +32,6 @@ spec:
               storage:
                 volumeClaimTemplate:
                   spec:
-                    storageClassName: ceph-rbd
                     resources:
                       requests:
                         storage: 10Gi
@@ -46,7 +45,7 @@ spec:
               storage:
                 volumeClaimTemplate:
                   spec:
-                    storageClassName: "ceph-rbd"
+                    # storageClassName: "ceph-rbd"
                     resources:
                       requests:
                         storage: 1Gi
