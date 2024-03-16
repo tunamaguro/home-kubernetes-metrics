@@ -6,9 +6,10 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/instance: vm-operator
-      app.kubernetes.io/name: victoria-metrics-operator
+      app.kubernetes.io/instance: victoria-metrics-operator
   endpoints:
     - port: http
+      
   namespaceSelector:
-    any: true
+    matchNames:
+      - "victoria-metrics-operator"
