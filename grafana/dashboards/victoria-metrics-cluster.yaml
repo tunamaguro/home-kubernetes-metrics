@@ -3,6 +3,10 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   name: vmcluster-dashboard
+  annotations:
+      # use server-side apply to avoid `Too long: must have at most 262144 bytes` error
+      # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#server-side-apply
+      argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   folder: General
   resyncPeriod: 30s
