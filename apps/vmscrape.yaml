@@ -14,7 +14,7 @@ spec:
     repoURL: https://github.com/tunamaguro/home-kubernetes-metrics.git
     directory:
       include: "{vm-servicescrape/*,vm-podscrape/*}"
-    path: vm-servicescrape
+    path: .
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
