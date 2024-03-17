@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vm-servicescrape
+  name: vm-default-scrape
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -12,6 +12,8 @@ spec:
   project: default
   source:
     repoURL: https://github.com/tunamaguro/home-kubernetes-metrics.git
+    directory:
+      include: "{vm-servicescrape/*,vm-podscrape/*}"
     path: vm-servicescrape
     targetRevision: main
   destination:
