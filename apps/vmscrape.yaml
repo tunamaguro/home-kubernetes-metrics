@@ -14,6 +14,7 @@ spec:
     repoURL: https://github.com/tunamaguro/home-kubernetes-metrics.git
     directory:
       include: "{vm-servicescrape/*,vm-podscrape/*}"
+      recurse: true
     path: .
     targetRevision: main
   destination:
