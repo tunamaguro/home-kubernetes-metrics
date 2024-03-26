@@ -13,3 +13,21 @@ spec:
     url: http://vmselect-victoria-metrics-k8s-stack.monitoring.svc:8481/select/0/prometheus
     isDefault: true
     jsonData: {}
+
+---
+
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: grafana-loki
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  datasource:
+    name: Loki
+    type: loki
+    access: proxy
+    url: http://loki-gateway.logging.svc.cluster.local
+    isDefault: false
+    jsonData: {}
