@@ -1,0 +1,25 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: cisco-snmp-metrics
+  namespace: monitoring
+spec:
+  jobLabel: snmp-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  endpoints:
+    - port: http
+      path: /snmp
+      params:
+        auth: [public_v2]
+        module: [if_mib, ip_mib, cisco_wlc]
+        target:
+          - 192.168.20.1
+      scrape_interval: 1s
+    - port: http
+      path: /metrics
+      scrape_interval: 30s
