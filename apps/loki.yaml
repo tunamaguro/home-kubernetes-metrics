@@ -27,7 +27,7 @@ spec:
               # 完全に外部からのアクセスを想定しないのでべた書きする
               accessKeyId: loki-storage
               secretAccessKey: loki-storage-secret
-              endpoint: https://minio.grafana-loki.svc.cluster.local:443
+              endpoint: https://minio.logging.svc.cluster.local:443
               s3ForcePathStyle: true
         monitoring:
           dashboards:
