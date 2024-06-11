@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: 'https://victoriametrics.github.io/helm-charts/'
-    targetRevision: 0.19.4
+    targetRevision: 0.23.1
     chart: victoria-metrics-k8s-stack
     helm:
       valuesObject:
