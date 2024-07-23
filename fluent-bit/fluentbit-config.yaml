@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fluentbit-config
+  namespace: fluentbit-system
 data:
 # 参考: https://github.com/microsoft/fluentbit-containerd-cri-o-json-log/blob/main/config.yaml
   fluent-bit.conf: |

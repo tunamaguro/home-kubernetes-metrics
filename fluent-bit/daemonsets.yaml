@@ -19,9 +19,6 @@ spec:
         - name: fluent-bit
           imagePullPolicy: Always
           image: cr.fluentbit.io/fluent/fluent-bit
-          # args:
-          #   - -c 
-          #   - /etc/fluent-bit/fluent-bit.conf
           volumeMounts:
             - name: varlog
               mountPath: /var/log
@@ -41,8 +38,6 @@ spec:
             limits:
               cpu: 200m
               memory: 512Mi
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       volumes:
         - name: varlog
           hostPath:
