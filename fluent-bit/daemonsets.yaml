@@ -28,6 +28,12 @@ spec:
               readOnly: true
             - name: fluentbit-config
               mountPath: /fluent-bit/etc
+          env:
+            - name: BASELIME_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: baselime-api-key
+                  key: BASELIME_API_KEY
           resources:
             requests:
               cpu: 100m
