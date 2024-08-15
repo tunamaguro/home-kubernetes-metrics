@@ -121,7 +121,7 @@ spec:
                 "uid": "${datasource}"
               },
               "editorMode": "builder",
-              "expr": "sum(rate(node_cpu_seconds_total{cluster=\"$cluster\", instance=\"$instance\", mode=~\"idle|iowait|steal\"}[$__rate_interval]))",
+              "expr": "sum(rate(node_cpu_seconds_total{cluster=\"$cluster\", instance=\"$instance\", mode!~\"idle|iowait|steal\"}[$__rate_interval]))",
               "hide": true,
               "legendFormat": "__auto",
               "range": true,
@@ -730,7 +730,7 @@ spec:
                 "uid": "${datasource}"
               },
               "editorMode": "builder",
-              "expr": "sum(rate(node_cpu_seconds_total{cluster=\"$cluster\", instance=\"$instance\", mode=~\"idle|iowait|steal\"}[$__rate_interval]))",
+              "expr": "sum(rate(node_cpu_seconds_total{cluster=\"$cluster\", instance=\"$instance\", mode!~\"idle|iowait|steal\"}[$__rate_interval]))",
               "hide": false,
               "legendFormat": "Real",
               "range": true,
@@ -3909,7 +3909,7 @@ spec:
           },
           {
             "current": {
-              "selected": true,
+              "selected": false,
               "text": "cluster-name",
               "value": "cluster-name"
             },
@@ -3984,8 +3984,8 @@ spec:
           {
             "current": {
               "selected": false,
-              "text": "k8s-worker2-crio",
-              "value": "k8s-worker2-crio"
+              "text": "k8s-master1",
+              "value": "k8s-master1"
             },
             "datasource": {
               "type": "prometheus",
@@ -4010,8 +4010,8 @@ spec:
           {
             "current": {
               "selected": false,
-              "text": "192.168.20.212:9100",
-              "value": "192.168.20.212:9100"
+              "text": "192.168.20.200:9100",
+              "value": "192.168.20.200:9100"
             },
             "datasource": {
               "type": "prometheus",
@@ -4043,6 +4043,6 @@ spec:
       "timezone": "",
       "title": "Kubernetes / Views / Nodes",
       "uid": "k8s_views_nodes",
-      "version": 2,
+      "version": 5,
       "weekStart": ""
     }
