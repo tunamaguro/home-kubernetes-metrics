@@ -37,10 +37,10 @@ spec:
                         storage: 10Gi
               resources:
                 requests:
-                  cpu: "0.05"
+                  cpu: 100m
                   memory: 500Mi
                 limits:
-                  cpu: "0.2"
+                  cpu: 200m
                   memory: 700Mi
             vmselect:
               replicaCount: 2
