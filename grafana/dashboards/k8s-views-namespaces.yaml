@@ -37,7 +37,7 @@ spec:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 1,
-      "id": 7,
+      "id": 4,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -457,7 +457,7 @@ spec:
                 "type": "prometheus",
                 "uid": "${datasource}"
               },
-              "editorMode": "code",
+              "editorMode": "builder",
               "exemplar": true,
               "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", image!=\"\", cluster=\"$cluster\"}[$__rate_interval]))",
               "interval": "",
@@ -828,6 +828,494 @@ spec:
               "custom": {
                 "axisCenteredZero": false,
                 "axisColorMode": "text",
+                "axisLabel": "CPU usage per Request",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "opacity",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 21
+          },
+          "id": 86,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", image!=\"\", pod=~\"${created_by}.*\", cluster=\"$cluster\"}[$__rate_interval])) by (pod)",
+              "hide": true,
+              "interval": "$resolution",
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "sum by(pod) (kube_pod_container_resource_requests{cluster=\"$cluster\", resource=\"cpu\", namespace=~\"$namespace\"})",
+              "hide": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "name": "Expression",
+                "type": "__expr__",
+                "uid": "__expr__"
+              },
+              "expression": "${A} / ${B}",
+              "hide": false,
+              "refId": "Pod",
+              "type": "math"
+            }
+          ],
+          "title": "CPU usage by Pod per Request",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "opacity",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 21
+          },
+          "id": 87,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(container_memory_working_set_bytes{namespace=~\"$namespace\", image!=\"\", pod=~\"${created_by}.*\", cluster=\"$cluster\"}) by (pod)",
+              "hide": true,
+              "interval": "$resolution",
+              "legendFormat": "{{ pod }}",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "builder",
+              "expr": "sum by(pod) (kube_pod_container_resource_requests{cluster=\"$cluster\", resource=\"memory\", namespace=~\"$namespace\"})",
+              "hide": true,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "name": "Expression",
+                "type": "__expr__",
+                "uid": "__expr__"
+              },
+              "expression": "${A} / ${B}",
+              "hide": false,
+              "refId": "Pod",
+              "type": "math"
+            }
+          ],
+          "title": "Memory usage by Pod per Request",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "CPU usage per Limits",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "opacity",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 29
+          },
+          "id": 88,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", image!=\"\", pod=~\"${created_by}.*\", cluster=\"$cluster\"}[$__rate_interval])) by (pod)",
+              "hide": true,
+              "interval": "$resolution",
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "sum by(pod) (kube_pod_container_resource_limits{cluster=\"$cluster\", resource=\"cpu\", namespace=~\"$namespace\"})",
+              "hide": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "name": "Expression",
+                "type": "__expr__",
+                "uid": "__expr__"
+              },
+              "expression": "${A} / ${B}",
+              "hide": false,
+              "refId": "Pod",
+              "type": "math"
+            }
+          ],
+          "title": "CPU usage by Pod per Limits",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "opacity",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 29
+          },
+          "id": 89,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(container_memory_working_set_bytes{namespace=~\"$namespace\", image!=\"\", pod=~\"${created_by}.*\", cluster=\"$cluster\"}) by (pod)",
+              "hide": true,
+              "interval": "$resolution",
+              "legendFormat": "{{ pod }}",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${datasource}"
+              },
+              "editorMode": "builder",
+              "expr": "sum by(pod) (kube_pod_container_resource_limits{cluster=\"$cluster\", resource=\"memory\", namespace=~\"$namespace\"})",
+              "hide": true,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "name": "Expression",
+                "type": "__expr__",
+                "uid": "__expr__"
+              },
+              "expression": "${A} / ${B}",
+              "hide": false,
+              "refId": "Pod",
+              "type": "math"
+            }
+          ],
+          "title": "Memory usage by Pod per Limits",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
@@ -877,7 +1365,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 21
+            "y": 37
           },
           "id": 77,
           "options": {
@@ -970,7 +1458,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 21
+            "y": 37
           },
           "id": 81,
           "options": {
@@ -1063,7 +1551,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 29
+            "y": 45
           },
           "id": 85,
           "options": {
@@ -1156,7 +1644,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 29
+            "y": 45
           },
           "id": 83,
           "options": {
@@ -1193,7 +1681,7 @@ spec:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 37
+            "y": 53
           },
           "id": 73,
           "panels": [],
@@ -1262,7 +1750,7 @@ spec:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 38
+            "y": 54
           },
           "id": 70,
           "options": {
@@ -1376,7 +1864,7 @@ spec:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 38
+            "y": 54
           },
           "id": 72,
           "options": {
@@ -1479,7 +1967,7 @@ spec:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 47
+            "y": 63
           },
           "id": 74,
           "options": {
@@ -1582,7 +2070,7 @@ spec:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 47
+            "y": 63
           },
           "id": 75,
           "options": {
@@ -1685,7 +2173,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 56
+            "y": 72
           },
           "id": 5,
           "options": {
@@ -1823,7 +2311,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 56
+            "y": 72
           },
           "id": 2,
           "options": {
@@ -1918,7 +2406,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 64
+            "y": 80
           },
           "id": 7,
           "options": {
@@ -2014,7 +2502,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 64
+            "y": 80
           },
           "id": 8,
           "options": {
@@ -2057,7 +2545,7 @@ spec:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 72
+            "y": 88
           },
           "id": 42,
           "panels": [],
@@ -2127,7 +2615,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 73
+            "y": 89
           },
           "id": 65,
           "options": {
@@ -2222,7 +2710,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 73
+            "y": 89
           },
           "id": 66,
           "options": {
@@ -2329,7 +2817,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 81
+            "y": 97
           },
           "id": 27,
           "options": {
@@ -2420,10 +2908,10 @@ spec:
             "current": {
               "selected": true,
               "text": [
-                "All"
+                "maguroskey"
               ],
               "value": [
-                "$__all"
+                "maguroskey"
               ]
             },
             "datasource": {
