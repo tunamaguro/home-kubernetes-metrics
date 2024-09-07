@@ -45,3 +45,6 @@ spec:
         - name: fluentbit-config
           configMap:
             name: fluentbit-config
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
