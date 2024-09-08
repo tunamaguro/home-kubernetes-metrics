@@ -28,7 +28,7 @@ spec:
       admin_password: secret
   ingress:
     spec: 
-      ingressClassName: nginx
+      ingressClassName: cilium
       rules:
         - host: k8s-dashboard.tunamaguro.work
           http:
