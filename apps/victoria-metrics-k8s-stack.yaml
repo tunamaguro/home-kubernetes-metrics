@@ -27,12 +27,12 @@ spec:
             retentionPeriod: "90"
             replicationFactor: 1
             vmstorage:
-              replicaCount: 2
-              storageClassName: "ceph-rbd"
+              replicaCount: 1
               storageDataPath: "/vm-data"
               storage:
                 volumeClaimTemplate:
                   spec:
+                    storageClassName: "ceph-rbd"
                     resources:
                       requests:
                         storage: 10Gi
